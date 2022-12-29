@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-node-app-rob
+spec:
+  selector:
+    matchLabels:
+      run: my-node-app-rob
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        run: my-node-app-rob
+    spec:
+      # imagePullSecrets:
+      # - name: registrysecret
+      containers:
+      - name: my-node-app-rob
+        imagePullPolicy: Always
+        image: rgsopedraultimate/node-basic-health:sleep
+        livenessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 3000
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          failureThreshold: 1
+        ports:
+        - containerPort: 3000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-node-app-rob
+  labels:
+    run: my-node-app-rob
+spec:
+  ports:
+  - port: 3000
+    protocol: TCP
+  selector:
+    run: my-node-app-rob
