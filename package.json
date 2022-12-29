@@ -12,6 +12,6 @@
         "express": "^4.17.1",
         "express-prom-bundle": "^6.4.1",
         "http-proxy-middleware": "^2.0.3",
-        "newrelic": "^9.7.4"
+        "newrelic": "7.1.3"
     }
 }
