@@ -11,6 +11,10 @@ router.use((req, res, next) => {
   next();
 });
 
+router.get('/', (req, res) => {
+  res.status(200).send();
+});
+
 
 router.get('/health', (req, res) => {
     const data = {
