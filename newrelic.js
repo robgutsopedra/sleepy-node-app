@@ -9,11 +9,11 @@ exports.config = {
   /**
    * Array of application names.
    */
-  app_name: ['Rob dummy app - local'],
+  app_name: ['Rob app with metadata file'],
   /**
    * Your New Relic license key.
    */
-  license_key: '[Redacted for github]',
+  license_key: '[redacted]',
   logging: {
     /**
      * Level at which to log. 'trace' is most useful to New Relic when diagnosing

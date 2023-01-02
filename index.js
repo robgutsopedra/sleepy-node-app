@@ -1,6 +1,8 @@
 const newrelic = require('newrelic')
 const express = require('express');
 const http = require('http');
+const fs = require('fs');
+
 
 const app = express();
 const router = express.Router();
@@ -100,5 +102,58 @@ router.get('/takes0seconds', (req, res) => {
 
 app.use('/api/v1', router);
 
+console.log("Variables de entorno: ")
+console.log(process.env)
+console.log("La variable del ficherito: ")
+console.log(process.env.ECS_CONTAINER_METADATA_FILE)
+console.log("La variable del endpoint v3 es " + process.env.ECS_CONTAINER_METADATA_URI)
+console.log("La variable del endpoint v4 es " + process.env.ECS_CONTAINER_METADATA_URI_V4)
+if (process.env.ECS_CONTAINER_METADATA_URI){
+  http.get(process.env.ECS_CONTAINER_METADATA_URI, res => {
+    let data = [];
+    console.log('Status Code for :' + process.env.ECS_CONTAINER_METADATA_URI + ' is ', res.statusCode);
+  
+    res.on('data', chunk => {
+      data.push(chunk);
+    });
+  
+    res.on('end', () => {
+      console.log('Response ended: ');
+      const container_metadata = JSON.parse(Buffer.concat(data).toString());
+      console.log("Container metadata from " + process.env.ECS_CONTAINER_METADATA_URI)
+      console.log(container_metadata)
+    });
+  }).on('error', err => {
+    console.log('Error: ', err.message);
+  });
+}
+if (process.env.ECS_CONTAINER_METADATA_URI_V4){
+  http.get(process.env.ECS_CONTAINER_METADATA_URI_V4, res => {
+    let data = [];
+    console.log('Status Code for :' + process.env.ECS_CONTAINER_METADATA_URI_V4 + ' is ', res.statusCode);
+  
+    res.on('data', chunk => {
+      data.push(chunk);
+    });
+  
+    res.on('end', () => {
+      console.log('Response ended: ');
+      const container_metadata = JSON.parse(Buffer.concat(data).toString());
+      console.log("Container metadata from " + process.env.ECS_CONTAINER_METADATA_URI_V4)
+      console.log(container_metadata)
+    });
+  }).on('error', err => {
+    console.log('Error: ', err.message);
+  });
+}
+
+if (process.env.ECS_CONTAINER_METADATA_FILE){
+  console.log("Contenido del ficherito: ")
+  fs.readFile(process.env.ECS_CONTAINER_METADATA_FILE, bar)
+}
+function bar (err, data)
+  {
+  console.log(data.toString('utf8'));
+  };
 const server = http.createServer(app);
 server.listen(3000);
