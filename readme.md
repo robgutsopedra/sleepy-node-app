@@ -19,6 +19,12 @@
 6. {lb_dns}:3000/api/v1/dummyError
 7. {lb_dns}:3000/api/v1/health
 
+Ejemplos:
+curl lb-ec2-dummy-app-1274798268.us-east-1.elb.amazonaws.com:3000/api/v1/health
+curl lb-ec2-dummy-app-1274798268.us-east-1.elb.amazonaws.com:3000/api/v1/takes1second
+curl lb-ec2-dummy-app-1274798268.us-east-1.elb.amazonaws.com:3000/api/v1/dummyError
+
+
 
 ## Formas de obtener meta-data de la app en ecs 
 *PISTA: Tenéis en el arranque de la app toda la información de ambos endpoints, del metadatafile, y escupe _todo_ por logs. 
